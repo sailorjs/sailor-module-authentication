@@ -13,6 +13,8 @@
 npm install sailor-module-jsonwebtoken
 ```
 
+## License
+
 MIT © sailorjs
 
 
