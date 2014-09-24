@@ -5,7 +5,7 @@
 [![Dev Dependencies Status](http://img.shields.io/david/dev/sailorjs/sailor-module-jsonwebtoken.svg?style=flat)](https://david-dm.org/sailorjs/sailor-module-jsonwebtoken#info=devDependencies)
 [![NPM Status](http://img.shields.io/npm/dm/sailor-module-jsonwebtoken.svg?style=flat)](https://www.npmjs.org/package/sailor-module-jsonwebtoken)
 
-> Add JSONWebtoken support
+> Adds support for JSONWebtoken
 
 ## Install
 

@@ -1,7 +1,7 @@
 {
   "name": "sailor-module-jsonwebtoken",
-  "description": "A new module for Sailor",
-  "version": "0.0.0",
+  "description": "Adds support for JSONWebtoken",
+  "version": "0.0.1",
   "author": {
     "name": "Kiko Beats",
     "email": "josefrancisco.verdu@gmail.com",
