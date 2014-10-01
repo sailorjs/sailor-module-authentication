@@ -1,7 +1,7 @@
 {
   "name": "sailor-module-jsonwebtoken",
   "description": "Adds support for JSONWebtoken",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Kiko Beats",
     "email": "josefrancisco.verdu@gmail.com",
@@ -18,7 +18,7 @@
     "mocha": "*",
     "should": "*",
     "superagent": "*",
-    "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
+    "sailorjs": "git://github.com/sailorjs/sailorjs",
     "grunt-translate-compile": "git://github.com/sailorjs/translate-compile"
   },
   "engines": {},
