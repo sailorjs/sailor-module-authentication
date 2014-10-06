@@ -1,5 +1,5 @@
 {
-  "name": "sailor-module-jsonwebtoken",
+  "name": "sailor-module-jwt",
   "description": "Adds support for JSONWebtoken",
   "version": "0.0.2",
   "author": {
@@ -31,7 +31,7 @@
   "main": "",
   "repository": {
     "type": "git",
-    "url": "http://github.com/sailorjs/sailor-module-jsonwebtoken.git"
+    "url": "http://github.com/sailorjs/sailor-module-jwt.git"
   },
   "scripts": {
     "test": "sh test/test.sh"
