@@ -1,7 +1,7 @@
 ## -- Dependencies -------------------------------------------------------------
 
 jwt         = require 'jsonwebtoken'
-tokenConfig = sails.config.token
+tokenConfig = sails.config.authentication.token
 
 expirationDate = ->
   expiration = new Date()

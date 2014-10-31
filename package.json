@@ -1,7 +1,7 @@
 {
-  "name": "sailor-module-jwt",
-  "description": "Adds support for JSONWebtoken",
-  "version": "0.0.2",
+  "name": "sailor-module-authentication",
+  "description": "Adds support for verify domains and JSONWebtoken (JWT)",
+  "version": "0.1.0",
   "author": {
     "name": "Kiko Beats",
     "email": "josefrancisco.verdu@gmail.com",
@@ -31,7 +31,7 @@
   "main": "",
   "repository": {
     "type": "git",
-    "url": "http://github.com/sailorjs/sailor-module-jwt.git"
+    "url": "http://github.com/sailorjs/sailor-module-authentication.git"
   },
   "scripts": {
     "test": "sh test/test.sh"

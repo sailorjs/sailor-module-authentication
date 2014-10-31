@@ -1,27 +1,29 @@
 ## -- Dependencies -------------------------------------------------------------
 
-jwt       = require 'jsonwebtoken'
-sailor    = require 'sailorjs'
-translate = sailor.translate
-errorify  = sailor.errorify
+jwt         = require 'jsonwebtoken'
+sailor      = require 'sailorjs'
+translate   = sailor.translate
+errorify    = sailor.errorify
+tokenConfig = sails.config.authentication.token
 
-# path and method when the middleware is not effective
-IGNORE_PATHS = ['POST','/user/login','POST','/user']
+existValue = (array, value) ->
+  if (array.indexOf(value) > -1) then true else false
 
-ignorablePath = (method, path) ->
-  # check that the last character is '/' and remove it
-  path = path.substring(0, path.length - 1) if path.charAt(path.length-1) is "/"
+isEndpoint = (req) ->
+  requestPath         = req.originalUrl.toLowerCase()
+  sanetizeRequestPath = requestPath.substring(1)
+  requestMethod       = req.route.method.toLowerCase()
+  endpoints           = tokenConfig.endpoints
 
-  for methodPath, index in IGNORE_PATHS by 2
-    ignorePath = IGNORE_PATHS[index+1]
-    return true if method is methodPath and path is ignorePath
-  false
+  endpoint =  unless endpoints[sanetizeRequestPath]? then false else existValue(endpoints[sanetizeRequestPath], requestMethod)
+  sails.log.debug "Token verification :: path [#{requestPath}], Method [#{requestMethod}], Endpoint [#{endpoint}]"
+  endpoint
 
 ## -- Exports -------------------------------------------------------------
 
 module.exports = (req, res, next) ->
-  # TODO: Temporal for development!
-  return next() if ignorablePath(req.originalMethod, req.originalUrl)
+
+  return next() if isEndpoint(req)
 
   token = undefined
   if req.method is "OPTIONS" and req.headers.hasOwnProperty("access-control-request-headers")
@@ -37,17 +39,20 @@ module.exports = (req, res, next) ->
       credentials = parts[1]
       token       = credentials  if /^Bearer$/i.test(scheme)
     else
-      err = msg: translate.get("Token.BadFormat")
-      return res.badRequest(errorify.serialize(err))
+      return errorify
+      .add 'domain', translate.get("Token.BadFormat"), 'token'
+      .end res, 'badRequest'
   else
-    err = msg: translate.get("Token.NotFound")
-    return res.badRequest(errorify.serialize(err))
+    return errorify
+    .add 'domain', translate.get("Token.NotFound"), 'token'
+    .end res, 'badRequest'
 
   JWTService.decode token, (err, decoded) ->
     if (err)
       if err.name is 'TokenExpiredError'
-        error = msg: translate.get("Token.Expired")
-        return res.badRequest(errorify.serialize(error))
+        return errorify
+        .add 'domain', translate.get("Token.Expired"), 'token'
+        .end res, 'badRequest'
       else
         return res.badRequest(errorify.serialize(err))
     else
