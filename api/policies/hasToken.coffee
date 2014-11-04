@@ -56,6 +56,10 @@ module.exports = (req, res, next) ->
       else
         return res.badRequest(errorify.serialize(err))
     else
-      User.findOne(decoded.id).populateAll().exec (err, user) ->
-        if err then req.user = null else req.user = user
+      req.token = decoded
+      if decoded.user.id?
+        User.findOne(decoded.user.id).populateAll().exec (err, user) ->
+          if err then req.user = null else req.user = user
+          next()
+      else
         next()
