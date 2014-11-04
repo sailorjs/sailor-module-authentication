@@ -6,7 +6,7 @@ module.exports.authentication =
     secret : 'sailorjs4win'
 
     endpoints:
-      'user': ['post', 'delete']
+      'user': 'post'
       'user/login': 'post'
 
     options:

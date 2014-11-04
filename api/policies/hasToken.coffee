@@ -10,13 +10,13 @@ existValue = (array, value) ->
   if (array.indexOf(value) > -1) then true else false
 
 isEndpoint = (req) ->
-  requestPath         = req.originalUrl.toLowerCase()
+  requestPath         = req._parsedOriginalUrl.pathname.toLowerCase()
   sanetizeRequestPath = requestPath.substring(1)
   requestMethod       = req.route.method.toLowerCase()
   endpoints           = tokenConfig.endpoints
 
   endpoint =  unless endpoints[sanetizeRequestPath]? then false else existValue(endpoints[sanetizeRequestPath], requestMethod)
-  sails.log.debug "Token verification :: path [#{requestPath}], Method [#{requestMethod}], Endpoint [#{endpoint}]"
+  sails.log.debug "Token verification :: path [#{requestPath}], method [#{requestMethod}], endpoint [#{endpoint}] :: valid [true]"
   endpoint
 
 ## -- Exports -------------------------------------------------------------
@@ -56,5 +56,6 @@ module.exports = (req, res, next) ->
       else
         return res.badRequest(errorify.serialize(err))
     else
-      req.user = decoded
-      next()
+      User.findOne(decoded.id).populateAll().exec (err, user) ->
+        if err then req.user = null else req.user = user
+        next()
